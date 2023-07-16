@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мультистория | Мастерская мультфильмов</title>
+  <style>
+    .container {
+      max-width: 1050px;
+      padding: 0 20px;
+      margin: 0 auto;
+    }
+
+    .header__row {
+      display: grid;
+      justify-items: center;
+      grid-row-gap: 6px;
+      grid-template-areas: "logo" "contacts";
+    }
+
+    .header .top-note {
+      display: none;
+      background: #D9D9D9;
+      padding: 15px 0;
+      text-align: center;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .header .top-note strong {
+      font-weight: 600;
+    }
+
+    .header__logo {
+      grid-area: logo;
+      display: flex;
+      justify-content: center;
+    }
+
+    .header__logo img {
+      max-width: 165px;
+    }
+
+    .header .action-btn {
+      display: none;
+      grid-area: action-btn;
+      padding: 7px 60px;
+      border: 2px solid #DC051F;
+      background: transparent;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 20px;
+      white-space: nowrap;
+      justify-self: center;
+      cursor: pointer;
+      transition: background ease 0.2s, color ease 0.2s, scale ease 0.1s;
+    }
+
+    @media (pointer: fine) {
+      .header .action-btn:hover {
+        background: #DC051F;
+        color: #fff;
+      }
+    }
+
+    .header .action-btn:active {
+      scale: 0.95;
+    }
+
+    @media (min-width: 430px) {
+      .header__row {
+        align-items: center;
+        grid-template-areas: "logo contacts" "action-btn action-btn";
+        justify-items: stretch;
+        padding: 20px 0;
+        grid-row-gap: 10px;
+      }
+
+      .header__logo {
+        justify-content: stretch;
+      }
+
+      .header .contacts {
+        margin-left: auto;
+      }
+
+      .header .action-btn {
+        display: block;
+      }
+    }
+
+    @media (min-width: 640px) {
+      .header__row {
+        grid-template-areas: "logo contacts action-btn";
+        grid-column-gap: 10px;
+      }
+
+      .header .contacts {
+        margin-left: 0;
+      }
+
+      .header .action-btn {
+        padding: 7px 25px;
+      }
+    }
+
+    @media (min-width: 810px) {
+      .header .action-btn {
+        font-size: 15px;
+        padding: 9px 60px;
+      }
+    }
+
+    @media (min-width: 920px) {
+      .header .top-note {
+        display: block;
+      }
+    }
+
+    @media (min-width: 1000px) {
+      .header__logo img {
+        max-width: 277px;
+      }
+    }
+
+    .contacts {
+      grid-area: contacts;
+    }
+
+    .contacts__list {
+      display: flex;
+      column-gap: 20px;
+    }
+
+    .contacts-item {
+      display: flex;
+      align-items: flex-start;
+      font-size: 9px;
+      line-height: 12px;
+      position: relative;
+      color: #000;
+    }
+
+    .contacts-item__link[href] {
+      display: flex;
+      align-items: flex-start;
+      text-decoration: none;
+      transition: opacity ease 0.2s;
+      color: #000;
+    }
+
+    .contacts-item__link[href]:hover {
+      opacity: 0.5;
+    }
+
+    .contacts-item__link[href]:active {
+      opacity: 0.1;
+    }
+
+    .contacts-item__link[href]::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .contacts-item__info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contacts-item__icon {
+      margin-right: 10px;
+    }
+
+    .contacts-item__title {
+      font-weight: 400;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .contacts-item__value {
+      font-weight: 600;
+    }
+
+    @media (min-width: 810px) {
+      .contacts-item {
+        font-size: 14px;
+        line-height: 18px;
+      }
+    }
+
+    .welcome__row {
+      padding-top: 18px;
+      position: relative;
+    }
+
+    .welcome__title {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .welcome__title_top {
+      margin-bottom: 20px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .welcome__title_bottom {
+      margin-bottom: 25px;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 38px;
+    }
+
+    .welcome__title_note {
+      color: #DC051F;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+    }
+
+    .welcome-slider {
+      margin-top: 20px;
+      position: relative;
+      min-width: 0;
+    }
+
+    .welcome-slider__slide {
+      display: flex !important;
+      justify-content: center !important;
+    }
+
+    .welcome-slider__slide-content {
+      max-width: 100%;
+      border-radius: 50%;
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .welcome__action {
+      position: absolute;
+      bottom: -100px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    @media (min-width: 695px) {
+      .welcome__row {
+        padding-top: 35px;
+        display: grid;
+        grid-template-columns: 0.6fr 1fr;
+        align-items: center;
+      }
+
+      .welcome__title {
+        text-align: start;
+        align-items: flex-start;
+      }
+
+      .welcome__title_top {
+        font-size: 18px;
+        line-height: 24px;
+      }
+
+      .welcome__title_bottom {
+        font-size: 30px;
+        line-height: 35px;
+      }
+
+      .welcome__action {
+        margin-top: 40px;
+        position: static;
+        transform: none;
+      }
+
+      .welcome-slider__slide-content {
+        width: 300px;
+        height: 300px;
+      }
+
+      .welcome-slider__pagination {
+        column-gap: 12px;
+      }
+
+      .welcome-slider__pagination-bullet {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    @media (min-width: 810px) {
+      .welcome__row {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .welcome__title_top {
+        font-size: 24px;
+        line-height: 35px;
+      }
+
+      .welcome__title_bottom {
+        font-size: 50px;
+        line-height: 70px;
+      }
+
+      .welcome__title_note {
+        font-size: 24px;
+        line-height: 30px;
+      }
+
+      .welcome-slider {
+        transform: translate(0, 0);
+      }
+
+      .welcome-slider__slide-content {
+        width: 350px;
+        height: 350px;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .welcome__row {
+        grid-template-columns: 0.8fr 1fr;
+      }
+
+      .welcome-slider {
+        transform: translate(-5%, 0);
+      }
+
+      .welcome-slider__slide-content {
+        width: 400px;
+        height: 400px;
+      }
+
+      .welcome__title_top {
+        margin-bottom: 30px;
+      }
+
+      .welcome__title_bottom {
+        margin-bottom: 30px;
+      }
+
+      .welcome__action {
+        margin-top: 50px;
+        font-size: 20px;
+        padding: 8px 70px;
+      }
+    }
+  </style>
+  <link rel="icon" href="./images/favicon.ico">
+  <link rel="stylesheet" href="./css/style.min.css">
+  <script defer src="./js/main.min.js"></script>
+</head>
+
+<body>
+  <div class="popup popup-form">
+    <div class="popup__row">
+      <div class="popup__wrapper popup-form__wrapper">
+        <div class="form-block enroll__form-block"><span class="form-block__title"><b>Запишитесь</b> на ближайший мастер-класс <b>прямо сейчас</b></span>
+          <form class="request-form" action="#" method="POST">
+            <input class="request-form__input" type="text" name="name" placeholder="Имя" required>
+            <input class="request-form__input" type="tel" name="tel" placeholder="Телефон" required>
+            <button class="trigger red-action-btn request-form__submit" type="submit" data-popup-selector=".popup-accept">Отправить</button>
+          </form>
+          <div class="form-block__note">Нажимая на кнопку “Отправить”, <br>вы даете согласие на обработку своих персональных данных</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="popup popup-accept">
+    <div class="popup__row">
+      <div class="popup__wrapper popup-accept__wrapper">
+        <div class="popup-accept__logo"><img src="./images/logo-desktop.svg" alt="Логотип"></div>
+        <div class="popup-accept__text-content"><span class="popup-accept__title">Спасибо, <br> ваша заявка принята!</span><span class="popup-accept__description">В ближайшее время мы с вами свяжемся.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper">
+    <header class="header" id="header">
+      <div class="top-note"><span class="top-note__text"><strong>Мультистория</strong> - мастерская мультфильмов</span></div>
+      <div class="container header__container">
+        <div class="header__row">
+          <div class="logo header__logo"><img src="./images/logo-desktop.svg" alt="Логотип"></div>
+          <div class="contacts header__contacts">
+            <ul class="contacts__list">
+              <li class="contacts-item contacts__item"><img class="contacts-item__icon" src="./images/map-pin-light.svg" alt="" aria-hidden="true">
+                <div class="contacts-item__info"><span class="contacts-item__title">г. Самара</span><span class="contacts-item__value">ул. Печерская, 20А</span></div>
+              </li>
+              <li class="contacts-item contacts__item"><a class="contacts-item__link" href="tel:89951310490"><img class="contacts-item__icon" src="./images/phone-icon-light.svg" alt="" aria-hidden="true">
+                  <div class="contacts-item__info"><span class="contacts-item__title">8 (995) 131-04-90</span><span class="contacts-item__value">Позвоните нам</span></div>
+                </a></li>
+            </ul>
+          </div>
+          <button class="trigger action-btn header__get-action" type="button" data-popup-selector=".popup-form">Заказать звонок</button>
+        </div>
+      </div>
+    </header>
+    <main class="main">
+      <section class="welcome" id="welcome">
+        <div class="container welcome__container">
+          <div class="welcome__row">
+            <div class="welcome__text-block">
+              <h1 class="welcome__title"><span class="welcome__title_top">Увлекательные <br> мастер-классы для детей</span><span class="welcome__title_bottom">Мультфильмы своими руками</span><em class="welcome__title_note">Каждую неделю!</em></h1>
+              <button class="trigger red-action-btn welcome__action" type="button" data-popup-selector=".popup-form">Узнайте расписание</button>
+            </div>
+            <div class="welcome-slider">
+              <div class="welcome-slider__main swiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide welcome-slider__slide"><img class="welcome-slider__slide-content" src="./images/slide-photo-1.jpg" alt="Дети на мастер-классе"></div>
+                  <div class="swiper-slide welcome-slider__slide"><img class="welcome-slider__slide-content" src="./images/slide-photo-2.jpg" alt="Дети на мастер-классе"></div>
+                  <div class="swiper-slide welcome-slider__slide"><img class="welcome-slider__slide-content" src="./images/slide-photo-3.jpg" alt="Дети на мастер-классе"></div>
+                  <div class="swiper-slide welcome-slider__slide"><img class="welcome-slider__slide-content" src="./images/slide-photo-4.jpg" alt="Дети на мастер-классе"></div>
+                </div>
+              </div>
+              <div class="pagination welcome-slider__pagination"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="what" id="what">
+        <div class="container what__container">
+          <div class="what__row">
+            <div class="anim-decor">
+              <picture>
+                <source type="image/webp" srcset="./images/anim-1-default.webp"><img class="anim-decor__image anim-decor__image_default" src="./images/anim-1-default.png" alt="" aria-hidden="true">
+              </picture>
+              <picture>
+                <source type="image/webp" srcset="./images/anim-1-active.webp"><img class="anim-decor__image anim-decor__image_active" src="./images/anim-1-active.png" alt="" aria-hidden="true">
+              </picture>
+            </div>
+            <h2 class="what__title">Что такое мастер-класс по мультипликации?</h2>
+            <div class="what__wrapper">
+              <div class="what__text-block"><span class="what__subtitle">Это незабываемое событие для каждого ребенка </span>
+                <p class="what__text">На мастер-классе дети узнают о мультипликации, фантазируют, создают настоящий мультфильм, играют и веселятся!</p>
+                <div class="decor-image">
+                  <div class="decor-image__add-image-block">
+                    <picture>
+                      <source type="image/webp" srcset="#" data-srcset="./images/message-1.webp"><img class="lazy" src="#" data-src="./images/message-1.png" alt="" aria-hidden="true">
+                    </picture>
+                    <p class="decor-image__text">Снимать мультики - это весело!</p>
+                  </div>
+                  <div class="decor-image__main-image-block">
+                    <picture>
+                      <source type="image/webp" srcset="#" data-srcset="./images/lumi-large.webp"><img class="lazy" src="#" data-src="./images/lumi-large.png" alt="" aria-hidden="true">
+                    </picture>
+                  </div>
+                </div>
+              </div>
+              <div class="what__grid">
+                <ul class="what-list">
+                  <li class="what-item"><img class="what-item__icon" src="./images/what-icon-1.svg" alt="" aria-hidden="true">
+                    <div class="what-item__info"><span class="what-item__title">от 1,5 часов</span><span class="what-item__value">Длительность мастер-класса</span></div>
+                  </li>
+                  <li class="what-item"><img class="what-item__icon" src="./images/what-icon-2.svg" alt="" aria-hidden="true">
+                    <div class="what-item__info"><span class="what-item__title">5-14 лет </span><span class="what-item__value">Программы для разных возрастов</span></div>
+                  </li>
+                  <li class="what-item"><img class="what-item__icon" src="./images/what-icon-3.svg" alt="" aria-hidden="true">
+                    <div class="what-item__info"><span class="what-item__title">Мультфильм своими руками</span><span class="what-item__value">Удивите родных и друзей</span></div>
+                  </li>
+                  <li class="what-item"><img class="what-item__icon" src="./images/what-icon-4.svg" alt="" aria-hidden="true">
+                    <div class="what-item__info"><span class="what-item__title">от 300 руб.</span><span class="what-item__value">Стоимость участия</span></div>
+                  </li>
+                </ul>
+                <picture>
+                  <source type="image/webp" srcset="#" data-srcset="./images/lumi-small.webp"><img class="lazy what__image what__image_small" src="#" data-src="./images/lumi-small.png" alt="Снимать мультики - это весело!">
+                </picture>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="actions" id="actions">
+        <div class="container actions__container">
+          <div class="actions__row">
+            <h2 class="actions__title">Что дети делают на мастер-классе?</h2>
+            <div class="actions__grid">
+              <ul class="actions-list">
+                <li class="action"><span class="action__about">придумывают сюжет</span>
+                  <div class="action__slider-container">
+                    <div class="action__slider swiper">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/thinking-1.jpg" alt="Дети придумывают сюжет"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/thinking-2.jpg" alt="Дети придумывают сюжет"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/thinking-3.jpg" alt="Дети придумывают сюжет"></div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="action"><span class="action__about">создают персонажей</span>
+                  <div class="action__slider-container">
+                    <div class="action__slider swiper">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/making-1.jpg" alt="Дети создают персонажей"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/making-2.jpg" alt="Дети создают персонажей"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/making-3.jpg" alt="Дети создают персонажей"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/making-4.jpg" alt="Дети создают персонажей"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/making-5.jpg" alt="Дети создают персонажей"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/making-6.jpg" alt="Дети создают персонажей"></div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="action"><span class="action__about">снимают мультфильм</span>
+                  <div class="action__slider-container">
+                    <div class="action__slider swiper">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/record-1.jpg" alt="Дети снимают мультфильм"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/record-2.jpg" alt="Дети снимают мультфильм"></div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="action"><span class="action__about">озвучивают героев</span>
+                  <div class="action__slider-container">
+                    <div class="action__slider swiper">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/speak-1.jpg" alt="Дети озвучивают героев"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/speak-2.jpg" alt="Дети озвучивают героев"></div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="action"><span class="action__about">вместе смотрят что получилось!</span>
+                  <div class="action__slider-container">
+                    <div class="action__slider swiper">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/see-1.jpg" alt="Дети вместе смотрят что получилось!"></div>
+                        <div class="swiper-slide"><img class="lazy" data-swiper-parallax-duration="400" data-swiper-parallax-opacity="0.5" data-swiper-parallax-scale="0.5" src="#" data-src="./images/see-2.jpg" alt="Дети вместе смотрят что получилось!"></div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="points" id="points">
+        <div class="container points__container">
+          <div class="points__row">
+            <h2 class="points__title">Почему стоит побывать на мастер-классе по мультипликации?</h2>
+            <div class="points__content">
+              <ul class="points-list">
+                <li class="point">
+                  <div class="point__content"><span class="point__title">Это незабываемое событие для ребенка</span>
+                    <p class="point__about">Дети обожают мультики, а создать настоящий мультфильм своими руками - это просто восторг! </p>
+                  </div>
+                </li>
+                <li class="point">
+                  <div class="point__content"><span class="point__title">Это эксклюзивный и уникальный вид досуга на рынке детских услуг</span>
+                    <p class="point__about">Где ещё, как не в Мультистории, можно прийти и создать настоящий мультфильм своими руками?</p>
+                  </div>
+                </li>
+                <li class="point">
+                  <div class="point__content"><span class="point__title">Дети пробуют новые виды творчества</span>
+                    <p class="point__about">Придумывание сюжета, изготовление декораций и персонажей, работа с техникой, съемка на мульт-станке и озвучка может открыть таланты вашего ребенка, о которых Вы даже подозревали.</p>
+                  </div>
+                </li>
+                <li class="point">
+                  <div class="point__content"><span class="point__title">Мастер-классы ещё и очень полезны для детей</span>
+                    <p class="point__about">На мастер-классе дети делают мультфильмы не в компьютере, а в реальной жизни. Формируются социальные навыки развивается воображение, а также навыки коммуникации и совместного творчества с другими детьми.</p>
+                  </div>
+                </li>
+                <li class="point">
+                  <div class="point__content"><span class="point__title">Интересные и познавательные факты о мультипликации</span>
+                    <p class="point__about">Что такое мультипликация? Когда и как был снят первый мультфильм? Какие техники мультипликации существуют? И мнногое-многое другое.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="heroes" id="heroes">
+        <picture>
+          <source type="image/webp" srcset="#" data-srcset="./images/pattern-stars.webp"><img class="lazy section-bg-img heroes__bg" src="#" data-src="./images/pattern-stars.png" alt="" aria-hidden="true">
+        </picture>
+        <div class="container heroes__container">
+          <div class="heroes__row">
+            <div class="anim-decor">
+              <picture>
+                <source type="image/webp" srcset="./images/anim-2-default.webp"><img class="anim-decor__image anim-decor__image_default" src="./images/anim-2-default.png" alt="" aria-hidden="true">
+              </picture>
+              <picture>
+                <source type="image/webp" srcset="./images/anim-2-active.webp"><img class="anim-decor__image anim-decor__image_active" src="./images/anim-2-active.png" alt="" aria-hidden="true">
+              </picture>
+            </div>
+            <h2 class="heroes__title">Ваш ребенок встретится с любимыми героями</h2>
+            <p class="heroes__subtitle">Динозавры, Пираты, LEGO, Гарри Поттер, Монстры на каникулах, Черепашки ниндзя, Мимимишки, Роботы, Миньоны, Космос, Щенячий патруль, Ледибаг, Супер-кот, Майнкрафт и многие-многие другие!</p>
+            <div class="heroes__content">
+              <div class="heroes-slider swiper">
+                <div class="heroes-slider__wrapper swiper-wrapper">
+                  <div class="heroes-slider__slide swiper-slide"><img class="lazy heroes-slider__image" src="#" data-src="./images/heroes-slider-photo-1.jpg" alt="Любимые герои детей"><img class="lazy heroes-slider__image" src="#" data-src="./images/heroes-slider-photo-2.jpg" alt="Любимые герои детей"><img class="lazy heroes-slider__image" src="#" data-src="./images/heroes-slider-photo-3.jpg" alt="Любимые герои детей"><img class="lazy heroes-slider__image" src="#" data-src="./images/heroes-slider-photo-4.jpg" alt="Любимые герои детей"></div>
+                  <div class="heroes-slider__slide swiper-slide"><img class="lazy heroes-slider__image" src="#" data-src="./images/heroes-slider-photo-5.jpg" alt="Любимые герои детей"><img class="lazy heroes-slider__image" src="#" data-src="./images/heroes-slider-photo-6.jpg" alt="Любимые герои детей"><img class="lazy heroes-slider__image" src="#" data-src="./images/heroes-slider-photo-7.jpg" alt="Любимые герои детей"><img class="lazy heroes-slider__image" src="#" data-src="./images/heroes-slider-photo-8.jpg" alt="Любимые герои детей"></div>
+                </div>
+              </div>
+              <div class="pagination heroes-slider__pagination"></div>
+              <div class="heroes-line">
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-1.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-2.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-3.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-4.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-5.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-6.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-7.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-8.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-1.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col"><img class="lazy" src="#" data-src="./images/heroes-slider-photo-2.jpg" alt="Любимые герои детей"></div>
+                <div class="heroes-line__col">
+                  <div class="heroes-line__description-block heroes__description-block">
+                    <p class="heroes__descr-text">Запишитесь на мастер-класс с любимыми героями вашего ребенка</p>
+                    <button class="trigger red-action-btn heroes__action" type="button" data-popup-selector=".popup-form">Записаться заранее</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="heroes__description-block">
+              <p class="heroes__descr-text">Запишитесь на мастер-класс с любимыми героями вашего ребенка</p>
+              <button class="trigger red-action-btn heroes__action" type="button" data-popup-selector=".popup-form">Записаться заранее</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="videos" id="videos">
+        <div class="container videos__container">
+          <div class="videos__row">
+            <h2 class="videos__title">Посмотрите мультфильмы с мастер-классов</h2>
+            <div class="videos__content"><a class="video-iframe-link" href="./videos/video.mp4" data-fslightbox="video-1">
+                <picture>
+                  <source type="image/webp" srcset="#" data-srcset="./images/pattern-video.webp"><img class="lazy video-iframe-link__bg" src="#" alt="" data-src="./images/pattern-video.jpg" aria-hidden="true">
+                </picture>
+                <div class="video-iframe-link__play-icon"></div>
+              </a><a class="video-iframe-link" href="./videos/video.mp4" data-fslightbox="video-2">
+                <picture>
+                  <source type="image/webp" srcset="#" data-srcset="./images/pattern-video.webp"><img class="lazy video-iframe-link__bg" src="#" alt="" data-src="./images/pattern-video.jpg" aria-hidden="true">
+                </picture>
+                <div class="video-iframe-link__play-icon"></div>
+              </a><a class="video-iframe-link" href="./videos/video.mp4" data-fslightbox="video-3">
+                <picture>
+                  <source type="image/webp" srcset="#" data-srcset="./images/pattern-video.webp"><img class="lazy video-iframe-link__bg" src="#" alt="" data-src="./images/pattern-video.jpg" aria-hidden="true">
+                </picture>
+                <div class="video-iframe-link__play-icon"></div>
+              </a><a class="video-iframe-link" href="./videos/video.mp4" data-fslightbox="video-4">
+                <picture>
+                  <source type="image/webp" srcset="#" data-srcset="./images/pattern-video.webp"><img class="lazy video-iframe-link__bg" src="#" alt="" data-src="./images/pattern-video.jpg" aria-hidden="true">
+                </picture>
+                <div class="video-iframe-link__play-icon"></div>
+              </a><a class="video-iframe-link" href="./videos/video.mp4" data-fslightbox="video-5">
+                <picture>
+                  <source type="image/webp" srcset="#" data-srcset="./images/pattern-video.webp"><img class="lazy video-iframe-link__bg" src="#" alt="" data-src="./images/pattern-video.jpg" aria-hidden="true">
+                </picture>
+                <div class="video-iframe-link__play-icon"></div>
+              </a></div>
+          </div>
+        </div>
+      </section>
+      <section class="events" id="events">
+        <div class="container events__container">
+          <div class="events__row">
+            <h2 class="visually-hidden">Мероприятия</h2><span class="events__title">А ещё у нас проходят...</span>
+            <div class="events__line">
+              <article class="event">
+                <div class="event__image-block"><img class="lazy event__image" src="data:image/gif;base64,R0lGODlhGQAQAIAAAP///wAAACH5BAEAAAEALAAAAAAZABAAAAIRjI+py+0Po5y02ouz3rz7rxUAOw==" data-src="./images/event-1.jpg" alt="Праздничные мастер-классы"></div>
+                <div class="event__content-block">
+                  <h3 class="event__title">Праздничные мастер-классы</h3>
+                  <p class="event__description">Игровая программа, приуроченная к календарным праздникам: Новому году, 23 февраля, Хэллоуину и другим...</p>
+                </div>
+              </article>
+              <article class="event">
+                <div class="event__image-block"><img class="lazy event__image" src="data:image/gif;base64,R0lGODlhGQAQAIAAAP///wAAACH5BAEAAAEALAAAAAAZABAAAAIRjI+py+0Po5y02ouz3rz7rxUAOw==" data-src="./images/event-2.jpg" alt="Тематические мастер-классы с квестами"></div>
+                <div class="event__content-block">
+                  <h3 class="event__title">Тематические мастер-классы с квестами</h3>
+                  <p class="event__description">“Ночь в Мультистории”, “Супергеройская вечеринка”, “Время сладкоежек” и другие. Веселимся и снимаем мультики!</p>
+                </div>
+              </article>
+              <article class="event">
+                <div class="event__image-block"><img class="lazy event__image" src="data:image/gif;base64,R0lGODlhGQAQAIAAAP///wAAACH5BAEAAAEALAAAAAAZABAAAAIRjI+py+0Po5y02ouz3rz7rxUAOw==" data-src="./images/event-3.jpg" alt="Головокружительный мульт-марафон"></div>
+                <div class="event__content-block">
+                  <h3 class="event__title">Головокружительный мульт-марафон</h3>
+                  <p class="event__description">Целая неделя тематических мастер-классов, где дети превращаются в настоящих мультийцев</p>
+                </div>
+              </article>
+            </div>
+            <div class="events__motivation motivation">
+              <div class="motivation__text-block"><span class="motivation__title">Запишитесь заранее</span>
+                <p class="motivation__text">Узнайте о предстоящих мероприятиях и забронируйте участие </p>
+              </div>
+              <div class="motivation__action-block">
+                <div class="motivation__action-wrapper">
+                  <div class="anim-decor">
+                    <picture>
+                      <source type="image/webp" srcset="./images/anim-3-default.webp"><img class="anim-decor__image anim-decor__image_default" src="./images/anim-3-default.png" alt="" aria-hidden="true">
+                    </picture>
+                    <picture>
+                      <source type="image/webp" srcset="./images/anim-3-active.png"><img class="anim-decor__image anim-decor__image_active" src="./images/anim-3-active.png" alt="" aria-hidden="true">
+                    </picture>
+                  </div>
+                  <button class="trigger red-action-btn motivation__action" type="button" data-popup-selector=".popup-form">Узнать расписание</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="reviews" id="reviews">
+        <div class="container reviews__container">
+          <picture>
+            <source type="image/webp" srcset="#" data-srcset="./images/attractions-bg.webp"><img class="lazy reviews__bg reviews__bg_main" src="#" data-src="./images/attractions-bg.png" alt="" aria-hidden="true">
+          </picture>
+          <picture>
+            <source type="image/webp" srcset="#" data-srcset="./images/fly-1.webp"><img class="lazy reviews__bg reviews__bg_fly-1" src="#" data-src="./images/fly-1.png" alt="" aria-hidden="true">
+          </picture>
+          <picture>
+            <source type="image/webp" srcset="#" data-srcset="./images/fly-2.webp"><img class="lazy reviews__bg reviews__bg_fly-2" src="#" data-src="./images/fly-2.png" alt="" aria-hidden="true">
+          </picture>
+          <picture>
+            <source type="image/webp" srcset="#" data-srcset="./images/fly-3.webp"><img class="lazy reviews__bg reviews__bg_fly-3" src="#" data-src="./images/fly-3.png" alt="" aria-hidden="true">
+          </picture>
+          <picture>
+            <source type="image/webp" srcset="#" data-srcset="./images/fly-4.webp"><img class="lazy reviews__bg reviews__bg_fly-4" src="#" data-src="./images/fly-4.png" alt="" aria-hidden="true">
+          </picture>
+          <picture>
+            <source type="image/webp" srcset="#" data-srcset="./images/fly-5.webp"><img class="lazy reviews__bg reviews__bg_fly-5" src="#" data-src="./images/fly-5.png" alt="" aria-hidden="true">
+          </picture>
+          <picture>
+            <source type="image/webp" srcset="#" data-srcset="./images/fly-6.webp"><img class="lazy reviews__bg reviews__bg_fly-6" src="#" data-src="./images/fly-6.png" alt="" aria-hidden="true">
+          </picture>
+          <div class="reviews__row">
+            <h2 class="visually-hidden">Отзывы</h2><span class="reviews__title">Что говорят родители?</span>
+            <div class="reviews__wrapper">
+              <div class="reviews__slider-container">
+                <div class="reviews-slider swiper">
+                  <div class="reviews-slider__wrapper swiper-wrapper">
+                    <article class="reviews-slider__slide review review-1 swiper-slide">
+                      <h2 class="visually-hidden">Отзыв о мастер-классе</h2>
+                      <div class="review__wrapper">
+                        <p class="review__text">
+                          Хочу оставить отзыв о мастер-классе
+                          “Симпсоны”. Ребенок сказал, что это был
+                          лучший день в его жизни. 💪🏻 Было
+                          интересно как ребенку, так и мне)) Как
+                          хорошо, что у нас в городе есть такое.
+                          Мы ещё обязательно придём! Большое
+                          спасибо! 👍🏻👍🏻👍🏻
+                        </p><span class="review__author">Елена Надтока</span>
+                      </div>
+                    </article>
+                    <article class="reviews-slider__slide review review-2 swiper-slide">
+                      <h2 class="visually-hidden">Отзыв о мастер-классе</h2>
+                      <div class="review__wrapper">
+                        <p class="review__text">
+                          Добрый вечер!получили от вас
+                          суперский мультик, как мы
+                          безмерно счастливы!огромное
+                          спасибо за трепетное
+                          и чуткое отношение и конечно
+                          профессионализм!!!будем вас
+                          советовать друзьям!спасибо за
+                          праздник, за такой памятный
+                          подарок!спасибо!!!!!спасибо!!! 💐
+                          💐💐💐💐💐
+
+                        </p>
+                      </div>
+                    </article>
+                    <article class="reviews-slider__slide review review-3 swiper-slide">
+                      <h2 class="visually-hidden">Отзыв о мастер-классе</h2>
+                      <div class="review__wrapper">
+                        <p class="review__text">
+                          Приводили детей на МК “Кругосветка. Сначала
+                          немного насторожила продолжительность в три
+                          часа. Но всё прошло как на одном дыхании.
+
+                        </p><span class="review__author">Ника Зварич</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <div class="pagination reviews-slider__pagination"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="enroll" id="enroll">
+        <div class="enroll__bg-block">
+          <picture>
+            <source type="image/webp" srcset="#" data-srcset="./images/pattern-cherries.webp"><img class="lazy section-bg-img enroll__bg" src="#" data-src="./images/pattern-cherries.png" alt="" aria-hidden="true">
+          </picture>
+        </div>
+        <div class="container enroll__container">
+          <div class="enroll__row">
+            <div class="enroll__line">
+              <div class="form-block enroll__form-block">
+                <h2 class="form-block__title"><b>Запишитесь</b> на ближайший мастер-класс <b>прямо сейчас</b></h2>
+                <form class="request-form" id="req-form" action="#" method="POST">
+                  <input class="request-form__input" type="text" name="name" placeholder="Имя" required>
+                  <input class="request-form__input" type="tel" name="tel-nums" placeholder="" required>
+                  <button class="trigger red-action-btn request-form__submit" type="submit" data-popup-selector=".popup-accept">Записаться</button>
+                </form>
+                <div class="form-block__note">Нажимая на кнопку “Отправить”, <br>вы даете согласие на обработку своих персональных данных</div>
+              </div>
+              <div class="decor-image">
+                <div class="decor-image__add-image-block">
+                  <picture>
+                    <source type="image/webp" srcset="#" data-srcset="./images/message-2.webp"><img class="lazy" src="data:image/gif;base64,R0lGODlh2QH7AIAAAP///wAAACH5BAEAAAEALAAAAADZAfsAAAL+jI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yu9wsOi8fksvmMTqvX7Lb7DY/L5/S6/Y7P6/f8vv8PGCg4SFhoeIiYqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGys7S1tre4ubq7vL2+v7CxwsPExcbHyMnKy8zNzs/AwdLT1NXW19jZ2tvc3d7f0NHi4+Tl5ufo6err7O3u7+Dh8vP09fb3+Pn6+/z9/v/w8woMCBBAsaPIgwocKFDBs6fAgxosSJFCtavIgxo8btjRw7evwIMqTIkSRLmjyJMqXKlSxbunwJM6bMmTRr2ryJM6fOnTx7+vwJNKjQoUSLGj2KNKnSpUybOn0KNarUqVSrWr2KNavWrVy7ev0KNqzYsWTLmj2LNq3atWzbun0LN67cuXTr2r2LN6/evXz7+v0LOLDgwYQLGz6MOLHixYwbO34MObLkyZQrW76MObPmzZw7e/4MOrTo0aRLmz6NOrXq1axbu34NO7bs2bRr276NO7fu3bx7+/4NPLjw4cSLGz+OPLny5cybO38OPbr06dSrW7+OPbv27dy7e/8OPrz48eTLmz+PPr16wQUAADs=" data-src="./images/message-2.png" alt="" aria-hidden="true">
+                  </picture>
+                  <p class="decor-image__text">
+                    Каждый ребенок в детстве
+                    ну просто обязан нарисовать дом,
+                    вылепить дерево
+                    и снять мультфильм!
+                  </p>
+                </div>
+                <div class="decor-image__main-image-block">
+                  <picture>
+                    <source type="image/webp" srcset="#" data-srcset="./images/lumi-2.webp"><img class="lazy" src="data:image/gif;base64,R0lGODlhpQBxAIAAAP///wAAACH5BAEAAAEALAAAAAClAHEAAAKnjI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yu9wsOi8fksvmMTqvX7Lb7DY/L5/S6/Y7P6/f8vv8PGCg4SFhoeIiYqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGys7S1tre4ubq7vL2+v7CxwsPEycVwAAOw==" data-src="./images/lumi-2.png" alt="" aria-hidden="true">
+                  </picture>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer" id="footer">
+      <div class="container footer__container">
+        <div class="footer__row">
+          <div class="footer__wrapper-top">
+            <div class="logo footer__logo"><img src="./images/logo-desktop-light.svg" alt="логотип"></div>
+            <div class="contacts footer__contacts">
+              <ul class="contacts__list">
+                <li class="contacts-item contacts__item"><a class="contacts-item__link">
+                    <div class="contacts-item__icon-block"><img class="contacts-item__icon" src="./images/map-pin-light.svg" alt="" aria-hidden="true"></div>
+                    <div class="contacts-item__info"><span class="contacts-item__title">г. Самара</span><span class="contacts-item__value">ул. Печерская, 20А</span></div>
+                  </a></li>
+                <li class="contacts-item contacts__item"><a class="contacts-item__link" href="tel:89951310490">
+                    <div class="contacts-item__icon-block"><img class="contacts-item__icon" src="./images/phone-icon-light.svg" alt="" aria-hidden="true"></div>
+                    <div class="contacts-item__info"><span class="contacts-item__title">8 (995) 131-04-90</span><span class="contacts-item__value">Позвоните нам</span></div>
+                  </a></li>
+                <li class="contacts-item contacts__item large"><a class="contacts-item__link" href="#"><img class="contacts-item__icon large__icon" src="./images/inst-large-icon.svg" alt="" aria-hidden="true"></a>
+                  <div class="contacts-item__info"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom"><a href="#" title="Наш инстаграмм"><img src="./images/inst-small-icon.svg" alt="Наш инстаграмм"></a><span>2016 - 2020 Мультистория</span></div>
+    </footer>
+  </div>
+</body>
+
+</html>
