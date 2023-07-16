@@ -6,4 +6,4 @@
 - Критический CSS в <head> страницы
 - Адаптив до 320px
 
-## Исходный код по [ссылке](https://github.com/Lokusok/severyanochka-source)
+## Исходный код по [ссылке](https://github.com/Lokusok/multistoria-source)
